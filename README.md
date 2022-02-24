@@ -1,6 +1,6 @@
-# Churn prediction
+# Opportunity Pipeline Forecasting
 
-Use classification to predict the event of attrition/churn for a customer
+Use classification to forecast the convertion of opportunity for multiple products.
 
 Tip: If you don't have markdown viewer like atom, you can render this on chrome by following [this link](https://imagecomputing.net/damien.rohmer/teaching/general/markdown_viewer/index.html).
 
