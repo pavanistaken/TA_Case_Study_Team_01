@@ -12,6 +12,12 @@ datasets:
       uri: ${core.data_base_path}/raw/opportunity/csv/opportunity.csv
       driver_params: {}
   cleaned:
+    target:
+      type: ds
+      format: parquet
+      uri: ${core.data_base_path}/cleaned/opportunity/target.parquet
+      driver_params: {}
+  
     product:
       type: ds
       format: parquet
