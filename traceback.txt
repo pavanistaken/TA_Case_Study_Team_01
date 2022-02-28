@@ -1,0 +1,90 @@
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-182-7d59bd5a3946> in <module>
+----> 1 reg_logit_report.get_report(include_shap=False, file_path='classification_logistic_model_report')
+
+d:\code_templates\classification-py\src\ta_lib\_vendor\tigerml\model_eval\base.py in get_report(self, format, file_path, include_shap, errorbuckets_spec, n_features, cutoff_value, **kwargs)
+   1257             )
+   1258 
+-> 1259         super()._get_report(
+   1260             format=format,
+   1261             file_path=file_path,
+
+d:\code_templates\classification-py\src\ta_lib\_vendor\tigerml\model_eval\base.py in _get_report(self, format, file_path, include_shap, errorbuckets_spec, n_features, include_shap_test_error_analysis, cutoff_value, **kwargs)
+    697         )
+    698         if (len(self.explainer.interpretations) > 0) or self.multi_class:
+--> 699             report_dict["model_interpretation"] = self.get_interpretation_report(
+    700                 include_shap=include_shap,
+    701                 errorbuckets_spec=errorbuckets_spec,
+
+d:\code_templates\classification-py\src\ta_lib\_vendor\tigerml\model_eval\base.py in get_interpretation_report(self, include_shap, errorbuckets_spec, n_features, include_shap_test_error_analysis)
+    673                 print("SHAP disabled as it is not applicable for the input provided")
+    674                 include_shap = False
+--> 675         return self.explainer.get_plots(
+    676             include_shap=include_shap,
+    677             errorbuckets_spec=errorbuckets_spec,
+
+d:\code_templates\classification-py\src\ta_lib\_vendor\tigerml\model_eval\plotters\interpretation.py in get_plots(self, include_shap, errorbuckets_spec, include_shap_test_error_analysis, n_features)
+   1260                     plots_dict["error_analysis"]["residual_analysis"][
+   1261                         "errorbucket_profiles"
+-> 1262                     ] = self.get_errorbucket_profiles()
+   1263                 if (
+   1264                     "errorbucket_drivers"
+
+d:\code_templates\classification-py\src\ta_lib\_vendor\tigerml\model_eval\plotters\interpretation.py in get_errorbucket_profiles(self)
+    873         plots_dict = {}
+    874         for i in num_cols:
+--> 875             train_plot = self._residual_analysis_by_feature(X, i, False)
+    876             if self.has_test:
+    877                 train_plot = (
+
+d:\code_templates\classification-py\src\ta_lib\_vendor\tigerml\model_eval\plotters\interpretation.py in _residual_analysis_by_feature(self, X, col_idv, categorical, train)
+    751             return heatmap
+    752         else:
+--> 753             return dataset.hvplot.kde(
+    754                 y=col_idv,
+    755                 by="errorbucket_label",  # Grouping by Predictions
+
+~\Anaconda3\envs\try-cla-dev\lib\site-packages\hvplot\plotting\core.py in kde(self, y, by, **kwds)
+    419             The HoloViews representation of the plot.
+    420         """
+--> 421         return self(kind='kde', x=None, y=y, by=by, **kwds)
+    422 
+    423     def density(self, y=None, by=None, **kwds):
+
+~\Anaconda3\envs\try-cla-dev\lib\site-packages\hvplot\plotting\core.py in __call__(self, x, y, kind, **kwds)
+     70                 return pn.panel(plot, **panel_dict)
+     71 
+---> 72         return self._get_converter(x, y, kind, **kwds)(kind, x, y)
+     73 
+     74     def _get_converter(self, x=None, y=None, kind=None, **kwds):
+
+~\Anaconda3\envs\try-cla-dev\lib\site-packages\hvplot\converter.py in __call__(self, kind, x, y)
+   1022                     dataset = Dataset(data)
+   1023                     dataset = dataset.redim(**self._redim)
+-> 1024                 obj = method(x, y)
+   1025                 obj._dataset = dataset
+   1026 
+
+~\Anaconda3\envs\try-cla-dev\lib\site-packages\hvplot\converter.py in kde(self, x, y, data)
+   1506 
+   1507         dist_opts = dict(self.kwds)
+-> 1508         data, x, y = self._process_chart_args(data, x, y)
+   1509         opts = self._get_opts('Distribution')
+   1510         opts = {'Distribution': dict(opts, **dist_opts), 'Area': opts,
+
+~\Anaconda3\envs\try-cla-dev\lib\site-packages\hvplot\converter.py in _process_chart_args(self, data, x, y, single_y, categories)
+   1266         data = self.data if data is None else data
+   1267 
+-> 1268         x = self._process_chart_x(data, x, y, single_y, categories=categories)
+   1269         y = self._process_chart_y(data, x, y, single_y)
+   1270 
+
+~\Anaconda3\envs\try-cla-dev\lib\site-packages\hvplot\converter.py in _process_chart_x(self, data, x, y, single_y, categories)
+   1246 
+   1247         if not x and not categories:
+-> 1248             raise ValueError('Could not determine what to plot. Set x explicitly')
+   1249         return x
+   1250 
+
+ValueError: Could not determine what to plot. Set x explicitly
